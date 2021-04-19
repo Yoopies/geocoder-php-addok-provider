@@ -19,6 +19,7 @@ use Geocoder\Exception\UnsupportedOperation;
 use Geocoder\Http\Provider\AbstractHttpProvider;
 use Geocoder\Model\Address;
 use Geocoder\Model\AddressCollection;
+use Geocoder\Provider\Addok\Model\FrenchAddress;
 use Geocoder\Provider\Provider;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
@@ -119,8 +120,10 @@ final class Addok extends AbstractHttpProvider implements Provider
             }
             $locality = !empty($feature->properties->city) ? $feature->properties->city : null;
             $postalCode = !empty($feature->properties->postcode) ? $feature->properties->postcode : null;
+            $cityCode = !empty($feature->properties->cityCode) ? $feature->properties->cityCode : null;
+            $oldCityCode = !empty($feature->properties->oldCityCode) ? $feature->properties->oldCityCode : null;
 
-            $results[] = Address::createFromArray([
+            $results[] = FrenchAddress::createFromArray([
                 'providedBy'   => $this->getName(),
                 'latitude'     => $coordinates[1],
                 'longitude'    => $coordinates[0],
@@ -128,6 +131,8 @@ final class Addok extends AbstractHttpProvider implements Provider
                 'streetName'   => $streetName,
                 'locality'     => $locality,
                 'postalCode'   => $postalCode,
+                'cityCode'     => $cityCode,
+                'oldCityCode'  => $oldCityCode,
             ]);
         }
 
