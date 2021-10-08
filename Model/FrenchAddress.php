@@ -23,6 +23,11 @@ class FrenchAddress extends Address
     private $oldCityCode;
 
     /**
+     * @var string|null
+     */
+    private $oldCity;
+
+    /**
      * @param string               $providedBy
      * @param AdminLevelCollection $adminLevels
      * @param Coordinates|null     $coordinates
@@ -32,6 +37,7 @@ class FrenchAddress extends Address
      * @param string|null          $postalCode
      * @param string|null          $cityCode
      * @param string|null          $oldCityCode
+     * @param string|null          $oldCity
      * @param string|null          $locality
      * @param string|null          $subLocality
      * @param Country|null         $country
@@ -47,6 +53,7 @@ class FrenchAddress extends Address
         string $postalCode = null,
         string $cityCode = null,
         string $oldCityCode = null,
+        string $oldCity = null,
         string $locality = null,
         string $subLocality = null,
         Country $country = null,
@@ -55,13 +62,14 @@ class FrenchAddress extends Address
         parent::__construct($providedBy, $adminLevels, $coordinates, $bounds, $streetNumber, $streetName, $postalCode, $locality, $subLocality, $country, $timezone);
         $this->cityCode = $cityCode;
         $this->oldCityCode = $oldCityCode;
+        $this->oldCity = $oldCity;
     }
 
 
     /**
      * @return string|null
      */
-    public function getCityCode(): ?string
+    public function getCityCode()
     {
         return $this->cityCode;
     }
@@ -69,9 +77,17 @@ class FrenchAddress extends Address
     /**
      * @return string|null
      */
-    public function getOldCityCode(): ?string
+    public function getOldCityCode()
     {
         return $this->oldCityCode;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getOldCity()
+    {
+        return $this->oldCity;
     }
 
     /**
@@ -79,7 +95,7 @@ class FrenchAddress extends Address
      *
      * @return self
      */
-    public function setCityCode(?string $cityCode): self
+    public function setCityCode($cityCode): self
     {
         $this->cityCode = $cityCode;
 
@@ -91,12 +107,25 @@ class FrenchAddress extends Address
      *
      * @return self
      */
-    public function setOldCityCode(?string $oldCityCode): self
+    public function setOldCityCode($oldCityCode): self
     {
         $this->oldCityCode = $oldCityCode;
 
         return $this;
     }
+
+    /**
+     * @param string|null $oldCity
+     *
+     * @return self
+     */
+    public function setOldCity($oldCity): self
+    {
+        $this->oldCity = $oldCity;
+
+        return $this;
+    }
+
 
     /**
      * Create an Address with an array. Useful for testing.
@@ -162,6 +191,7 @@ class FrenchAddress extends Address
             $data['postalCode'],
             $data['cityCode'],
             $data['oldCityCode'],
+            $data['oldCity'],
             $data['locality'],
             $data['subLocality'],
             self::createCountry($data['country'], $data['countryCode']),
