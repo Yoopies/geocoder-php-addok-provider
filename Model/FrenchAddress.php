@@ -194,7 +194,7 @@ class FrenchAddress extends Address
             $data['oldCity'],
             $data['locality'],
             $data['subLocality'],
-            self::createCountry($data['country'], $data['countryCode']),
+            self::createCountry($data['postalCode']),
             $data['timezone']
         );
     }
@@ -215,18 +215,42 @@ class FrenchAddress extends Address
     }
 
     /**
-     * @param string|null $name
-     * @param string|null $code
+     * @param string|null $postalCode
      *
      * @return Country|null
      */
-    private static function createCountry($name, $code)
+    private static function createCountry($postalCode)
     {
-        if (null === $name && null === $code) {
+        if (null === $postalCode) {
             return null;
         }
 
-        return new Country($name, $code);
+        switch (substr($postalCode, 0, 3)) {
+            case '971':
+                return new Country('Guadeloupe', 'GP');
+            case '972':
+                return new Country('Martinique', 'MQ');
+            case '973':
+                return new Country('Guyane', 'GF');
+            case '974':
+                return new Country('La Réunion', 'RE');
+            case '975':
+                return new Country('Saint-Pierre-et-Miquelon', 'PM');
+            case '976':
+                return new Country('Mayotte', 'YT');
+            case '977':
+                return new Country('Saint-Barthélemy', 'BL');
+            case '978':
+                return new Country('Saint-Martin', 'MF');
+            case '986':
+                return new Country('Wallis-et-Futuna', 'WF');
+            case '987':
+                return new Country('Polynésie française', 'PF');
+            case '988':
+                return new Country('Nouvelle-Calédonie', 'NC');
+        }
+
+        return new Country('France', 'FR');
     }
 
     /**
